@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Firgun</title>
+<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="icon" href="data:image/svg+xml,
+  <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
+    <text y=%22.9em%22 font-size=%2290%22>🌱</text>
+  </svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=Merriweather&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Merriweather', serif;
+    background-color: #fffce7;
+    color: #717254;
+    margin: 0;
+  }
+  /* Base Navbar Styles */
+/* Base Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: rgba(255, 252, 231, 0.97);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 12px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav-logo img {
+  height: 42px;
+  display: block;
+}
+
+/* Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 28px; /* balanced spacing */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  color: #0a778b;
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+/* Hover underline */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background-color: #0a778b;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #05505e;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Button style */
+.nav-links .nav-btn {
+  border: 2px solid #0a778b !important;
+  padding: 5px 15px !important;  /* more horizontal breathing room */
+  border-radius: 500px !important; /* fully rounded pill */
+  font-size: 1rem !important;
+  font-family: 'Fraunces', serif !important;
+  font-weight: 600 !important;
+  background-color: transparent !important;
+  color: #0a778b !important;
+  transition: all 0.3s ease !important;
+  line-height: 1.6 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.nav-btn:hover {
+  background-color: #0a778b !important;
+  color: white !important;
+  border-color: #0a778b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+  section {
+    padding: 5rem 2rem;
+  }
+  section:nth-of-type(odd) {
+    background-color: #fffce7;
+  }
+  section:nth-of-type(even) {
+    background-color: #fff6f2;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 57.3px;
+    color: #0a778b;
+    margin-bottom: 0.5rem;
+  }
+  h2, h3, h4 {
+    font-family: 'Fraunces', serif;
+    color: #0a778b;
+    margin-top: 0;
+  }
+  h2 { font-size: 36.2px; }
+  p {
+    font-family: 'Merriweather', serif;
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 900px;
+  }
+  
+.hero {
+  display: flex;
+  align-items: center;      /* vertical centering */
+  justify-content: center;  /* horizontal centering */
+  min-height: calc(100vh - 80px); /* remove navbar height from hero */
+  padding-top: 40px;        /* small padding so text doesn’t overlap navbar */
+  background-color: #fffce7;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.hero-text {
+  flex: 1;
+  text-align: center;
+}
+
+.firgun-logo {
+  max-width: 350px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text p {
+  font-family: 'Merriweather', serif;
+  font-size: 18px;
+  color: #717254;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+/* Hand-drawn sketch button */
+.sketch-button {
+  display: inline-block;
+  position: relative;
+  padding: 1rem 3rem;
+  font-family: 'Merriweather', serif;
+  font-size: 18px;
+  color: #0a778b;
+  text-decoration: none;
+  background: url('images/handdrawn-oval.svg') no-repeat center/contain;
+  border: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.get-started-btn {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.get-started-btn svg {
+  width: 220px;
+  height: 70px;
+}
+
+.get-started-btn:hover {
+  transform: scale(1.05);
+}
+
+.get-started-btn:hover ellipse {
+  fill: rgba(10, 119, 139, 0.05);
+}
+
+  form {
+    display: grid;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  #preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #fffaf5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    font-size: 1.5rem;
+  }
+  
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: transparent;
+  border: 2px solid #0a778b;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centers arrow perfectly */
+  padding: 0;
+}
+
+#backToTop:hover {
+  background-color: rgba(10, 119, 139, 0.1);
+}
+
+  .features-section {
+  background-color: #fff6f2;
+  padding: 80px 5%;
+  font-family: 'Fraunces', serif;
+  color: #717254;
+  text-align: center;
+}
+
+.features-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0a778b;
+  margin-bottom: 0.5rem;
+}
+
+.features-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0a778b;
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+}
+
+.feature-item {
+  flex: 1;
+  padding: 0 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature-icon {
+  width: 70px;
+  height: 70px;
+  border: 2px solid #717254;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.feature-icon img {
+  width: 40px;
+  height: auto;
+}
+
+.feature-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a778b;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.feature-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+  font-family: 'CMU Serif', serif;
+}
+
+.feature-divider {
+  width: 1px;
+  background-color: #ccc;
+}
+
+.therapy-section {
+  background-color: #fffce7;
+  padding: 80px 5%;
+  font-family: 'Fraunces', serif;
+  color: #717254;
+  text-align: center;
+}
+
+.therapy-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0a778b;
+  margin-bottom: 3rem;
+}
+
+.therapy-steps {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 40px;
+  position: relative;
+}
+
+.therapy-step {
+  flex: 1;
+  max-width: 300px;
+  text-align: center;
+}
+
+.step-number {
+  font-size: 1.8rem;
+  color: #0a778b;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.step-text {
+  font-family: 'CMU Serif', serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Connecting plant growth line image */
+.therapy-steps::before {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: 5%;
+  width: 90%;
+  height: 150px;
+  background: url('images/plant-growth-line.png') center no-repeat;
+  background-size: contain;
+  z-index: -1;
+}
+
+.meet-us-section {
+  background-color: #fff6f2;
+  padding: 80px 5%;
+  font-family: 'Fraunces', serif;
+  color: #717254;
+}
+
+.meet-us-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0a778b;
+  margin-bottom: 3rem;
+}
+
+.meet-us-profile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.profile-image {
+  flex: 1;
+  max-width: 300px;
+}
+
+.profile-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.profile-text {
+  flex: 2;
+  min-width: 300px;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0a778b;
+}
+
+.profile-role {
+  color: #0a778b;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-family: 'CMU Serif', serif;
+}
+
+.qualifications strong,
+.certifications strong {
+  color: #0a778b;
+}
+
+.light-bg {
+  background-color: #fffce7;
+}
+
+.reverse-layout {
+  flex-direction: row-reverse;
+}
+
+.reverse-layout .profile-image {
+  max-width: 300px;
+}
+
+.reverse-layout .profile-text {
+  padding-right: 0;
+}
+
+.contact-section {
+  background-color: #fff6f2;
+  min-height: calc(100vh - 60px); /* leaves space for footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.contact-container h2 {
+  color: #0a778b;
+  margin-bottom: 10px;
+}
+
+.contact-container p {
+  color: #717254;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  text-align: center !important;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.contact-form button {
+  background-color: transparent;
+  color: #0a778b;
+  border: 2px solid #0a778b;
+  border-radius: 50px;   /* slightly more rounded */
+  padding: 12px 40px;    /* more breathing room */
+  font-size: 1.05rem;    /* slightly bigger text */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Fraunces', serif; /* matches your brand font */
+  font-weight: 600; /* makes it look bold and clear */
+}
+
+.contact-form button:hover {
+  background-color: #0a778b;
+  color: white;
+}
+
+.site-footer {
+  background-color: #fffce7;
+  padding: 15px 5%;
+  font-family: 'CMU Serif', serif;
+  font-size: 0.85rem;
+  color: #717254;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links a {
+  color: #0a778b;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  padding: 80px 20px;
+}
+
+.light-bg {
+  background-color: #fff6f2;
+}
+
+.testimonials-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  color: #0a778b;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.testimonial-carousel {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0 50px; /* space for arrows inside */
+  box-sizing: border-box;
+}
+
+/* Track for slides */
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+/* Each slide takes full carousel width */
+.testimonial-slide {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 2px solid #0a778b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #0a778b;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: #0a778b;
+  color: white;
+}
+
+.carousel-btn.prev {
+  left: 5px; /* inside padding */
+}
+
+.carousel-btn.next {
+  right: 5px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .testimonial-carousel {
+    padding: 0 35px; /* smaller arrow spacing */
+  }
+  .carousel-btn {
+    font-size: 1.2rem;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.testimonial {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  font-family: 'Merriweather', serif;
+  font-size: 0.95rem;
+  color: #717254;
+  line-height: 1.6;
+  position: relative;
+  max-width: 600px;
+}
+
+.testimonial::before {
+  content: "“";
+  font-size: 3rem;
+  color: #0a778b;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  opacity: 0.15;
+}
+
+.testimonial footer {
+  font-weight: bold;
+  color: #0a778b;
+  margin-top: 15px;
+  text-align: right;
+}
+
+.testimonial:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.feature-icon {
+  width: 80px; /* size of the circle */
+  height: 80px;
+  border: 2px solid #7b7b65; /* same color as before */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  background-color: transparent;
+}
+
+.feature-icon img {
+  width: 60%;  /* increase this to make icons bigger */
+  height: auto;
+}
+
+/* Fade-in animation */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =======================
+   RESPONSIVE DESIGN
+   ======================= */
+
+/* Tablets & below */
+/* Tablets & smaller laptops */
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 0 1rem; /* prevent edge touching */
+  }
+  .hero-image, 
+  .hero-text {
+    flex: unset;
+    width: 100%;
+  }
+  .hero-image img {
+    max-width: 80%;
+    height: auto;
+  }
+  .firgun-logo {
+    max-width: 250px;
+    height: auto;
+  }
+
+  /* Hide decorative line on smaller screens */
+  .therapy-steps::before {
+    display: none;
+  }
+  .therapy-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Team profiles stacked */
+  .meet-us-profile,
+  .reverse-layout {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Features vertical */
+  .features-grid {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  .feature-divider {
+    display: none;
+  }
+}
+
+/* Mobile phones & smaller tablets */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
+  .hero-content {
+    gap: 1.5rem;
+  }
+  .hero-image img {
+    max-width: 90%;
+    height: auto;
+  }
+  .firgun-logo {
+    max-width: 220px;
+  }
+  h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Feature icons */
+  .feature-icon {
+    width: 80px;
+    height: 80px;
+  }
+  .feature-icon img {
+    width: 65%;
+  }
+
+  /* Contact form */
+  .contact-section {
+    padding: 2rem 1rem;
+    min-height: auto;
+    
+  }
+  .contact-container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  /* Footer */
+  .footer-container {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .hero-image img {
+    max-width: 95%;
+  }
+  .firgun-logo {
+    max-width: 180px;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  .get-started-btn svg {
+    width: 180px;
+    height: 60px;
+  }
+}
+
+
+/* Mobile Hero Fix */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image img {
+    max-width: 80%;
+    height: auto;
+  }
+
+  .hero-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  .firgun-logo {
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto 1rem auto;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+    line-height: 1.4;
+    padding: 0 0.5rem;
+  }
+
+  .get-started-btn svg {
+    width: 180px;
+    height: auto;
+  }
+}
+
+/* FINAL fix for mobile white space issue */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+section, div, img, svg, video {
+  max-width: 100% !important;
+}
+
+.hero-content,
+.features-grid,
+.therapy-steps,
+.meet-us-profile {
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Ensure the Get Started SVG button doesn't overflow */
+.get-started-btn svg {
+  width: 100%;
+  height: auto;
+  max-width: 220px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="preloader">Loading...</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfVWLG1fakJFbSdThSci5Ylwi0JkDssvuJHTEWkcM9V57EB5g/viewform?usp=dialog " target="_blank" class="nav-btn">Book a Session</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-content">
+
+    <!-- Animation Left -->
+    <div class="hero-image">
+      <!-- Static Hands -->
+      <!-- <img src="images/hands.png" alt="Hands" class="hands-static"> -->
+
+      <video class="flower-video" autoplay muted loop playsinline>
+        <source src="images/flower-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Logo + Text Right -->
+    <div class="hero-text">
+      <img src="images/firgun-logo.png" alt="Firgun Mental Health" class="firgun-logo">
+      <p>‘Firgun’, a Hebrew word, which in essence translates to the spirit of celebrating and having unselfish delight or pride in other’s success.</p>
+      <p>That’s what we believe in.</p>
+
+      <!-- Hand-drawn style oval button -->
+      <a href="#fix" class="get-started-btn">
+        <svg viewBox="0 0 220 70" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="110" cy="35" rx="95" ry="28"
+                   fill="transparent"
+                   stroke="#0a778b"
+                   stroke-width="2.5"
+                   stroke-dasharray="2 3"
+                   stroke-linecap="round"
+                   transform="rotate(-1 110 35)" />
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                font-family="'Fraunces', serif" font-size="18" fill="#0a778b">
+            Get Started
+          </text>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="fix" class="features-section">
+  <div class="features-container">
+    <h2 class="features-title" style="text-align: left;">
+      We’re not here to give you an easy fix.
+    </h2>
+    <h3 class="features-subtitle">
+      But we will help you find the light that burns longer.
+    </h3>
+
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="images/1.png" alt="Individualized Therapy">
+        </div>
+        <h4 class="feature-heading">Individualized<br>Tailored Therapy</h4>
+        <p class="feature-text">
+          At Firgun, we prioritise your needs above any one-size-fits-all approach or traditional framework.
+          We believe that therapy is, above all, a collaboration. Together, we’ll explore what works best for you.
+          Your voice shapes the journey and we’re here to support you through it. So you tell us, how can we help you?
+        </p>
+      </div>
+
+      <div class="feature-divider"></div>
+
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="images/2.png" alt="Inclusive Environments">
+        </div>
+        <h4 class="feature-heading">Inclusive & Accepting<br>Environments</h4>
+        <p class="feature-text">
+          Our therapeutic spaces are open to everyone—no problem is ever “too small” or “not serious enough”.
+          At Firgun, we promise to provide you a safe and welcoming space regardless of where you come from,
+          who you are and what you wish to become. We’re here to help you on your journey, offering the best support possible to help you achieve the life you envision.
+        </p>
+      </div>
+
+      <div class="feature-divider"></div>
+
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="images/3.png" alt="Accessibility & Affordability">
+        </div>
+        <h4 class="feature-heading">Accessibility &<br>Affordability</h4>
+        <p class="feature-text">
+          As psychologists today, our mission is to make therapy as accessible as we can, without ever compromising on quality.
+          That is why all our sessions start at just INR 500. You have the flexibility to adjust the pricing as per your comfort and circumstances—because your well-being always comes first.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEANING -->
+<section id="about">
+  <h2>Firgun: What does it mean to us?</h2>
+  Firgun, in one word, embodies our lifelong passion- a dream nurtured by our experiences as young therapists committed to making a difference. From the very beginning, our vision for Firgun has been clear: to make therapy truly accessible to everyone who needs it. We understand that seeking help can feel daunting, overwhelming and at times, even out of reach. These barriers are what we want to target. We recognise that the foundation of every therapeutic relationship is trust, acceptance, safety and absence of judgement. At Firgun, fostering this connection is at the heart of everything we do. In shaping Firgun, we wanted to adapt to the evolving needs of today’s world while staying true to the core values that define therapy: empathy, respect, and transformation. Firgun isn’t just a space for healing, it’s a space where we work collaboratively with you to explore, grow, and thrive. 
+
+<br><br>You’d ask- <i style = "color: #0a778b " > How is Firgun different?</i><br><br>
+
+The name Firgun reflects our mission: a space that joyfully and selflessly celebrates your growth. We offer a space where people share what helps them navigate challenges. We believe that therapy and healing should extend beyond the one hour spent with a therapist, which is why we foster ongoing conversations that help uncover what works and what doesn’t. This shared space allows clients, therapists, and anyone seeking help to learn from one another, breaking down the stigma around mental health and creating more warm discussions about healing.</p>
+</section>
+
+<!-- STEPS -->
+<section id="how" class="therapy-section">
+  <div class="therapy-container">
+    <h2 class="therapy-title">How therapy at Firgun works?</h2>
+     <div class="how-image">
+      <img src="images/how.jpg" alt="Therapy Process">
+    </div>
+    <div class="therapy-steps">
+      <div class="therapy-step">
+        <div class="step-number">1</div>
+        <p class="step-text">
+          You decide if you’re ready to give therapy a shot.
+        </p>
+      </div>
+
+      <div class="therapy-step">
+        <div class="step-number">2</div>
+        <p class="step-text">
+          You get in touch with us. We arrange a quick 30-min call at a mutually convenient time,
+          to understand what you’re looking for and how we can help.
+        </p>
+      </div>
+
+      <div class="therapy-step">
+        <div class="step-number">3</div>
+        <p class="step-text">
+          You and your chosen therapist will work as a team to formulate therapy goals,
+          and plan on how to achieve them. Remember, therapy goes beyond just the one hour we speak.
+          It will be uncomfortable before it gets better. All we ask of you is to show up and commit to your journey of healing.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="meet-us-section">
+  <div class="meet-us-container">
+    <h2 class="meet-us-title">Meet us</h2>
+
+    <div class="meet-us-profile">
+      <div class="profile-image">
+        <img src="images/jayeesha.jpg" alt="Jayeesha Taneja">
+      </div>
+      <div class="profile-text">
+        <h3 class="profile-name">Jayeesha Taneja</h3>
+        <p class="profile-role">Founder, Psychologist</p>
+        <p>
+          I started Firgun not as a business, but as a means to an end. As a psychologist, writer,
+          and storyteller, I’ve always believed in the healing power of stories — telling them,
+          being heard, and creating space for growth. Firgun is that space: a platform for
+          therapists, clients, and anyone on a journey of healing to share, connect, and feel seen.
+        </p>
+        <p>
+          Therapy isn’t a one-way process. At Firgun, we honour the spirit of mutual learning.
+          As therapists, we grow with you, not just through progress, but through your setbacks too.
+          We listen, reflect, and hold space for both the wins and the wounds, walking alongside you
+          through the light and the dark.
+        </p>
+        <p>
+          As the founder and your therapist, my goal is to help you find your "right size",
+          your unique path to healing. One of my favourite songs says, “All lights turned off can be
+          turned on.” That’s what I’m here for: to help you find your light, switch it on, and be
+          there when you need a hand to change the bulb.
+        </p>
+        <p>
+          My approach is person-centered and trauma-informed, drawing from attachment theory,
+          Gestalt principles, and Acceptance and Commitment Therapy. I also incorporate trauma
+          and art-based practices to better expressive spaces for healing. Each journey is unique,
+          and I tailor the process to honour your individual needs and pace.
+        </p>
+        <p class="qualifications">
+          <strong>Qualifications:</strong> BA Journalism, Psychology, English; MSc Psychological Therapies
+        </p>
+        <p class="certifications">
+          <strong>Certificates:</strong> Group Therapy, Trauma Informed Practice, Trauma Informed Practice
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="meet-us-section light-bg">
+  <div class="meet-us-container">
+    <div class="meet-us-profile reverse-layout">
+      <div class="profile-image">
+        <img src="images/vedika.jpg" alt="Vedika Pathania">
+      </div>
+      <div class="profile-text">
+        <h3 class="profile-name">Vedika Pathania</h3>
+        <p class="profile-role">Founder, Rehabilitation Psychologist</p>
+        <p>
+          Firgun started over a FaceTime call, continents apart, and grew into something that
+          stands for all I believe my profession to be. I wanted to help people, the best I could.
+          And that was something Jayeesha and I have always shared, and that is what we’ve poured
+          into Firgun. One of my favourite movies has a quote that goes, “Hope is a good thing,
+          maybe the best of things” and this is what I view therapy to be — the process of finding
+          hope and creating meaning on days when it seems like the toughest thing to do.
+        </p>
+        <p>
+          At Firgun, and as an individual, I value trust and warmth and hope that I can create
+          spaces that make you feel safe. We’ve aimed to make Firgun this safe space, and I hope
+          you feel it too.
+        </p>
+        <p>
+          I’ve been trained as a rehabilitation psychologist, and the lens guides my approach as
+          a professional as well. As a therapist, I best describe my practice as an eclectic one.
+          The approach I take is trauma-informed, person-centred, strengths-based, holistic, and
+          integrated with cognitive techniques tailored to the individual. I also integrate
+          psychodynamic, interpersonal, emotion-focused and IFS approaches. I work collaboratively
+          to find an approach that fits <em>your</em> story best and that is what I’m here for,
+          to learn from you, to grow, to help you find hope, hold onto it, and rediscover it when it
+          feels out of reach.
+        </p>
+        <p class="qualifications">
+          <strong>Qualifications:</strong> BA Journalism, Psychology, English; MSc Psycho-Social Rehabilitation
+        </p>
+        <p class="certifications">
+          <strong>Certifications and Licensure:</strong> RCI License, Psychological First Aid
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="testimonials-section">
+  <div class="testimonials-container">
+    <h2 class="testimonials-title">Testimonials</h2>
+
+    <div class="testimonial-carousel">
+      <button class="carousel-btn prev">&#10094;</button>
+      <div class="carousel-track">
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“I felt really heard during our sessions. You asked thoughtful questions and listened with care. The little homework suggestions were nice too, even if I didn’t always get to them. Thanks for creating a space where I could open up.”</p>
+            <footer>— G, 25</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“Vedika, as a therapist, has the beautiful ability to look beyond what meets the eye. Over the course of 10 months, she has helped me understand my emotions better, cope with my ADHD, process my past trauma and love myself a little more. She creates an immaculate safe space and delves into treating her clients with gentle care and affirmation, enabling a respectful, nurturing and proactive healing journey!”</p>
+            <footer>— Janushi, 22</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“Jayeesha, your sessions have been life changing. It has helped me a lot in ways i can’t describe and I have changed as a person. As a therapist and as an individual, you’re the kindest, most empathetic and courageous person, your smile just does the charm. There was never a time I would not want to attend the session. Thank you again”</p>
+            <footer>— Anonymous</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“After meddling around with multiple therapists when I was in a really bad place and that's when I got introduced to Vedika through a therapy service. I loved the way she gave me enough space and sessions to open up before moving forward. A person like me tends to get stuck in a loophole but she remained patient with me. Her socratic assignments and weekly brainstorming questions helped me deep dive into my issues and reflect on my past. Her sessions are 100% worth it. They helped me get out of a dark place and gave me lessons worth going through again and again. I am so grateful I got her as my therapist.”</p>
+            <footer>— Anonymous</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“Somehow, even when I was going through the messiest emotions, she made it feel okay, like I wasn’t broken, just human. There were laughs, tears, deep thoughts, and lightbulb moments I’ll never forget. I walked in with baggage and walked out each week feeling just a little bit more like myself again. If you’re thinking about therapy and wondering if it can actually feel good, this is your sign. Jayeesha doesn’t just help you grow, she makes the whole process feel human, real, creative and even kind of… fun. Yes, therapy can be fun. Who knew?!”</p>
+            <footer>— Anonymous</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“Vedika, you're such a good therapist. The best thing about you is that you allow the other person to speak completely without interrupting them unnecessarily, and you listen carefully to whatever they're saying, which is a very important part of therapy, I believe. Also, you don't give unnecessary advice or recommendations, which allows us to believe in ourselves. It was nice talking with you, and if I ever need therapy in the future, I'll surely reach out to you.”</p>
+            <footer>— N</footer>
+          </blockquote>
+        </div>
+
+        <div class="testimonial-slide">
+          <blockquote class="testimonial">
+            <p>“Jayeesha creates a space that feels gentle yet powerful, where healing doesn’t feel forced but flows naturally. Her presence is calm and grounding, and her empathy is unlike anything I’ve encountered. She listens with her whole heart, and somehow, even in my most difficult moments, she made me feel safe enough to be fully myself,  i’ve never felt more accepted. I’ve changed in ways I never imagined. I’m stronger, kinder to myself, and more in tune with who I am. Definitely more regulated, less toxic haha. I never missed on a session, not because i’m competitive , but because I knew I’d leave feeling lighter and more hopeful. Thank you for showing me what hope is Jayeesha.”</p>
+            <footer>— Anonymous</footer>
+          </blockquote>
+        </div>
+
+      </div>
+      <button class="carousel-btn next">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-container" style="text-align: center !important;">
+    <h2>Contact us</h2>
+    <p>We’d love to hear from you. Fill out the form below and our team will get back to you shortly.</p>
+    <form class="contact-form" action="mailto:firgunmentalhealth@gmail.com " method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <span>© 2025 Firgun Mental Health</span>
+    <span class="made-with">Made with ❤️ by <a href="https://www.linkedin.com/in/armaan-nayyar-5776a4206/" target="_blank">Armaan Nayyar</a></span>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" title="Back to top">
+  <svg viewBox="0 0 24 24" width="20" height="20">
+    <path d="M12 19V5M5 12l7-7 7 7"
+          fill="none"
+          stroke="#0a778b"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  window.addEventListener('load', () => {
+    document.getElementById('preloader').style.display = 'none';
+  });
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', function() {
+  document.querySelector('.navbar')
+    .classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const animateEls = document.querySelectorAll('[data-animate]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+animateEls.forEach(el => observer.observe(el));
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".carousel-track");
+  const slides = Array.from(track.children);
+  const prevButton = document.querySelector(".carousel-btn.prev");
+  const nextButton = document.querySelector(".carousel-btn.next");
+
+  let currentIndex = 0;
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateCarousel();
+  });
+
+  prevButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateCarousel();
+  });
+
+  updateCarousel(); // initial positioning
+});
+</script>
+
+</body>
+</html>
