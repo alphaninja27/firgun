@@ -114,10 +114,24 @@
   border-color: #0a778b;
 }
 
-/* Responsive */
+/* Desktop Navbar */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+/* Mobile: only show Book a Session */
 @media (max-width: 768px) {
+  .nav-links li {
+    display: none; /* hide all items */
+  }
+
+  .nav-links li:last-child {
+    display: block; /* show only the last item (Book a Session) */
+  }
+
   .nav-links {
-    display: none;
+    justify-content: flex-end; /* align to right */
   }
 }
 
